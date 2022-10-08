@@ -2,5 +2,11 @@
     "server":{
         "host":"localhost",
         "port":8080
+    },
+    "database":{
+        "host":"localhost",
+        "name":"gauth",
+        "user":"user",
+        "port":5432
     }
 }
