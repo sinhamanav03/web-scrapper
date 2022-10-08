@@ -7,6 +7,7 @@ import (
 
 	"github.com/jinzhu/configor"
 	"github.com/joho/godotenv"
+	"github.com/sinhamanav03/web-scrapper/internal/db"
 )
 
 var ErrInvalidFileExtension = errors.New("file extension not supported")
@@ -16,6 +17,8 @@ type Config struct {
 		Port int
 		Host string
 	}
+
+	Database *db.Config
 }
 
 func Load(fileNames ...string) (*Config, error) {
