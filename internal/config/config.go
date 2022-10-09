@@ -14,11 +14,20 @@ var ErrInvalidFileExtension = errors.New("file extension not supported")
 
 type Config struct {
 	Server struct {
-		Port int
-		Host string
+		ScrapperPort      int `json:"scrapper_port"`
+		ScrapperStorePort int `json:"scrapper_store_port"`
+		Host              string
 	}
 
 	Database *db.Config
+
+	Attributes struct {
+		Name        string
+		Price       string
+		Description string
+		Reviews     string
+		Image       string
+	}
 }
 
 func Load(fileNames ...string) (*Config, error) {
@@ -69,7 +78,7 @@ func loadConfig(fileNames ...string) (*Config, error) {
 }
 
 func newConf() *configor.Configor {
-	conf := configor.Config{ENVPrefix: "GAUTH"}
+	conf := configor.Config{ENVPrefix: "WEB_SCRAPPER"}
 	config := configor.New(&conf)
 
 	return config

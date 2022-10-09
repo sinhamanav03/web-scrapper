@@ -1,8 +1,10 @@
 package db
 
 import (
-	"database/sql"
 	"fmt"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 type Config struct {
@@ -13,19 +15,14 @@ type Config struct {
 	Port     int
 }
 
-func NewPostgresDB(conf *Config) (*sql.DB, error) {
-	dsn := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable", conf.User, conf.Password, conf.Host, conf.Port, conf.Name)
+func NewPostgresDB(conf *Config) (*gorm.DB, error) {
 
-	connDB, err := sql.Open("postgres", dsn)
+	dsn := fmt.Sprintf("host=%v user=%v password=%v dbname=%v port=%v sslmode=disable ", conf.Host, conf.User, conf.Password, conf.Name, conf.Port)
+	db, err := gorm.Open(postgres.Open(dsn))
 	if err != nil {
-		return nil, fmt.Errorf("unable to open db connection: %w", err)
+		return nil, err
 	}
 
-	err = connDB.Ping()
+	return db, nil
 
-	if err != nil {
-		return nil, fmt.Errorf("unable to ping to db: %w", err)
-	}
-
-	return connDB, nil
 }
