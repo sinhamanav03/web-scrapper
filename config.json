@@ -1,12 +1,21 @@
 {
     "server":{
         "host":"localhost",
-        "port":8080
+        "scrapper_port":8081,
+        "scrapper_store_port":8088
     },
     "database":{
         "host":"localhost",
-        "name":"gauth",
+        "name":"webscr",
         "user":"user",
+        "password":"password",
         "port":5432
+    },
+    "attributes":{
+        "name": "span#productTitle",
+        "price": "span#price_inside_buybox",
+        "description":"span#productDescription",
+        "reviews": "span#acrCustomerReviewText",
+        "image": "img#landingImage"      
     }
 }

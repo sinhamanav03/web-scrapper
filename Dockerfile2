@@ -1,0 +1,23 @@
+#phase 1
+FROM golang:1.17-alpine AS builder
+
+WORKDIR /build
+
+COPY . .
+
+RUN go build -o main2 cmd/scrapper-store/main.go
+
+#phase 2
+FROM alpine:3.13
+
+WORKDIR /app
+
+COPY --from=builder /build/main2 .
+
+COPY config.json .
+
+COPY .env .
+
+EXPOSE 8088
+
+CMD [ "/app/main2" ]
